@@ -125,6 +125,15 @@ unsafe fn convert_native_with_source(
                 )
                 .ok()
             }
+            EventType::MouseMoveRelative { delta_x, delta_y } => {
+            let event_type = CGEventType::MouseMoved;
+            let button = CGMouseButton::Left;
+            let current_pos = get_current_mouse_location()?;
+            let event = CGEvent::new_mouse_event(source, event_type, current_pos, button).ok()?;
+            event.set_integer_value_field(EventField::MOUSE_EVENT_DELTA_X, (*delta_x) as i64);
+            event.set_integer_value_field(EventField::MOUSE_EVENT_DELTA_Y, (*delta_y) as i64);
+            Some(event)
+        }
             EventType::Wheel { delta_x, delta_y } => {
                 let wheel_count = 2;
                 CGEvent::new_scroll_event(
