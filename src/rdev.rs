@@ -260,6 +260,9 @@ pub enum EventType {
         delta_x: i64,
         delta_y: i64,
     },
+    /// Move the mouse relative to its current position.
+    /// Values are in pixels.
+    MouseMoveRelative { delta_x: f64, delta_y: f64 },
 }
 
 /// When events arrive from the OS they get some additional information added from
